@@ -27,7 +27,7 @@
 <?php
 function printBio($tuple) {
 
-  print "<strong>Name: </strong><p style='display: inline-block; margin: 2;'>$tuple[0]</p><br>";
+  print "<h3 style='margin-bottom: 10px;'>$tuple[0]</h3>";
   print "<strong>Sex: </strong><p style='display: inline-block; margin: 2;'>$tuple[1]</p><br>";
   print "<strong>Born: </strong><p style='display: inline-block; margin: 2;'>$tuple[2]</p><br>";
 
@@ -111,8 +111,6 @@ function fetch()
   $cols = [];
   $query = "SELECT CONCAT(first, ' ', last) AS Name, sex AS Sex, dob AS DOB, dod AS DOD FROM Actor WHERE id = $id;";
   issueQuery($query, $db_connection, $rows, $cols);
-
-  print '<h3>Bio</h3>';
   printBio($rows[0]);
 
   $rows = [];
