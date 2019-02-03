@@ -29,7 +29,7 @@
 
   /* Helper functions */
 
-  function printResults($attrs, $tuples) {
+  function printResults($attrs, $tuples, $rel) {
     //Query returned no tuples
     if (count($tuples) == 0) {
       print "<p>No results found.</p>";
@@ -44,8 +44,12 @@
     print "</tr>";
     foreach ($tuples as $tuple) {
       print '<tr align="center">';
-      foreach ($tuple as $val)
-        print "<td>$val</td>";
+      for ($i = 0; $i < count($tuple); $i++) {
+        if ($i == 0)
+          print "<td><a href='$rel.php?name=$tuple[$i]'>$tuple[$i]<a></td>";
+        else
+          print "<td>$tuple[$i]</td>";
+      }
       print "</tr>";
     }
     print "</table>";
@@ -96,19 +100,19 @@
 
     $rows = [];
     $cols = [];
-    $query = "SELECT * FROM Actor WHERE CONCAT(first, ' ', last) LIKE '%$keyword%' OR CONCAT(last, ' ', first) LIKE '%$keyword%';";
+    $query = "SELECT CONCAT(first, ' ', last) AS Name, sex AS Sex, dob AS DOB, dod AS DOD FROM Actor WHERE CONCAT(first, ' ', last) LIKE '%$keyword%' OR CONCAT(last, ' ', first) LIKE '%$keyword%';";
     issueQuery($query, $db_connection, $rows, $cols);
 
     print '<h3>Actors/Actresses</h3>';
-    printResults($cols, $rows);
+    printResults($cols, $rows, "actor");
 
     $rows = [];
     $cols = [];
-    $query = "SELECT * FROM Movie WHERE title LIKE '%$keyword%';";
+    $query = "SELECT title AS Title, year AS Year, rating AS Rating, company AS Company FROM Movie WHERE title LIKE '%$keyword%';";
     issueQuery($query, $db_connection, $rows, $cols);
 
     print '<h3>Movies</h3>';
-    printResults($cols, $rows);
+    printResults($cols, $rows, "movie");
 
     //Close database connection
     mysql_close($db_connection);
