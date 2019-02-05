@@ -1,13 +1,14 @@
 <html>
   <head>
     <link rel="stylesheet" href="style.php">
+    <script src="functions.js"></script>
   </head>
   <body>
 
     <div id="center-col">
       <div id="navbar">
 
-        <div id="logo">
+        <div id="logo" onclick="returnToHome()">
           <p id="logo-text">IMBd</p>
         </div>
 
@@ -23,7 +24,7 @@
 
       </div>
 
-      <div id="page-body" style="padding: 5px 0px 15px 15px;">
+      <div id="page-body">
         <?php fetch(); ?>
       </div>
     </div>

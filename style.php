@@ -21,7 +21,7 @@ body {
 }
 
 #center-col {
-  width: 80%;
+  width: 70%;
   background-color: white;
   z-index: 2;
   min-height: 100vh;
@@ -36,6 +36,7 @@ body {
   border-radius: 3px;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 #logo-text {
@@ -50,4 +51,8 @@ body {
 #add {
   margin-right: 10px;
   margin-left: auto;
+}
+
+#page-body {
+  padding: 5px 0px 15px 30px;
 }

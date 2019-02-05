@@ -1,14 +1,13 @@
 <html>
   <head>
     <link rel="stylesheet" href="style.php">
-    <script src="functions.js"></script>
   </head>
   <body>
 
     <div id="center-col">
       <div id="navbar">
 
-        <div id="logo" onclick="returnToHome()">
+        <div id="logo">
           <p id="logo-text">IMBd</p>
         </div>
 
@@ -27,8 +26,8 @@
       <div id="page-body">
         <?php fetch(); ?>
       </div>
-    </div>
 
+    </div>
   </body>
 </html>
 
@@ -102,27 +101,22 @@ function fetch()
   $db = "CS143";
   mysql_select_db($db, $db_connection);
 
-  //Format query using user input
-  $id = $_GET["id"];
+  $rows = [];
+  $cols = [];
+  $query = "SELECT id, title AS Title, year AS Year, rating AS Rating FROM Movie JOIN Sales ON Movie.id = Sales.mid WHERE year > 2002 ORDER BY ticketsSold DESC LIMIT 10;";
+  issueQuery($query, $db_connection, $rows, $cols);
+
+  print '<h3>Top Box Office</h3>';
+  printResults($cols, $rows, "movie");
 
   $rows = [];
   $cols = [];
-  $query = "SELECT title, year, rating, genre, CONCAT(first, ' ', last), company FROM Movie, MovieDirector, MovieGenre, Director WHERE Movie.id = MovieDirector.mid AND Movie.id = MovieGenre.mid AND MovieDirector.did = Director.id AND Movie.id = $id;";
+  $query = "SELECT id, title AS Title, year AS Year, rating AS Rating, rot AS Score FROM Movie JOIN MovieRating ON Movie.id = MovieRating.mid WHERE year > 2002 AND rot > 70 ORDER BY rot DESC LIMIT 10;";
   issueQuery($query, $db_connection, $rows, $cols);
 
-  $tuple = $rows[0];
-  print "<h3 style='margin-bottom: 10px;'>$tuple[0] ($tuple[1])</h3>";
-  print "<div style='font-size: 13px;'>$tuple[2] | $tuple[3]</div>";
-  print "<strong style='display: inline-block;'>Director:&nbsp;</strong><p style='display: inline-block; margin-bottom: 3px;'>$tuple[4]</p><br>";
-  print "<strong style='display: inline-block;'>Production Company:&nbsp;</strong><p style='display: inline-block; margin-top: 3px;'>$tuple[5]</p><br>";
-
-  $rows = [];
-  $cols = [];
-  $query = "SELECT aid, CONCAT(first, ' ', last) AS Name, role AS Role FROM MovieActor JOIN Actor ON MovieActor.aid = Actor.id WHERE mid = $id;";
-  issueQuery($query, $db_connection, $rows, $cols);
-
-  print '<h3>Cast</h3>';
-  printResults($cols, $rows, "actor");
+  print '<h3>Critically Acclaimed*</h3>';
+  printResults($cols, $rows, "movie");
+  print "<p>*based on film's Rotten Tomatoes score</p>";
 
   //Close database connection
   mysql_close($db_connection);
