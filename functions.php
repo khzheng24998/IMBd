@@ -12,7 +12,7 @@ $(document).ready(function()
     $("#dropdown").toggle();
   });
 
-  $(".dropdown-option").on("click", function() {
+  $(".dropdown-option").on("click", function(event) {
     window.location.href = event.target.id + ".php";
   });
 

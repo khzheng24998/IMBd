@@ -76,5 +76,29 @@ body {
 
 .label {
   font-weight: 550;
-  margin: 12px 0px 12px 0px;
+  margin: 12px 0px 8px 0px;
+}
+
+#add-btn {
+  width: 58px;
+  margin-left: 95px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.column {
+  float: left;
+  padding: 10px;
+}
+
+.left {
+  width: 50%;
+}
+
+.right {
+  width: 50%;
 }

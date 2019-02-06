@@ -14,7 +14,7 @@
         </div>
 
         <div id="add" style="display: inline-block; padding: 0px 0px 0px 10px;">
-          <button id="add-btn" style="width: 52px; margin-left: 101px;">Add +</button>
+          <button id="add-btn">Add +</button>
           <div id="dropdown">
             <p id="addComment" class="dropdown-option">Add comment</p>
             <p id="addPerson" class="dropdown-option">Add actor/director</p>
