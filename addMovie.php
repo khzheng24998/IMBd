@@ -7,33 +7,8 @@
   <body>
 
     <div id="center-col">
-      <div id="navbar">
-
-        <div id="logo" onclick="returnToHome()">
-          <p id="logo-text">IMBd</p>
-        </div>
-
-        <div id="add" style="display: inline-block; padding: 0px 0px 0px 10px;">
-          <button id="add-btn">Add +</button>
-          <div id="dropdown">
-            <p id="addComment" class="dropdown-option">Add comment</p>
-            <p id="addPerson" class="dropdown-option">Add actor/director</p>
-            <p id="addMovie" class="dropdown-option">Add movie</p>
-            <p id="addActorToMovie" class="dropdown-option">Add actor to movie</p>
-            <p id="addDirectorToMovie" class="dropdown-option">Add director to movie</p>
-          </div>
-        </div>
-
-        <div id="search" style="display: inline-block; padding: 0px 0px 0px 10px;">
-          <form action="search.php" method="GET" style="margin: 0px;">
-            <input name="keyword" type="text"><input type="submit" value="Search">
-          </form>
-        </div>
-
-      </div>
-
+      <?php include "database.php"; printNavBar(); ?>
       <div id="page-body">
-
         <form action="addMovie.php" method="POST">
 
           <div style="display: flex;">
@@ -62,11 +37,8 @@
           <br><br><input type="submit" value="Submit">
 
         </form>
-
-        <?php include "database.php"; updateDB(); ?>
-
+        <?php updateDB(); ?>
       </div>
-
     </div>
   </body>
 </html>
@@ -81,33 +53,34 @@ function updateDB()
   $rating = $_POST["rating"];
   $company = $_POST["company"];
 
-  if ($title == "" || $year == "" || $rating == "" || $company == "")
+  if ($title == "" || $year == "" || $rating == "" || $company == "") {
     print "<p style='color: red;'>One or more fields missing!</p>";
-  else
-  {
-    $tuples = [];
-    $attrs = [];
-
-    //Get max movie id
-    $query = "SELECT * FROM MaxMovieID;";
-    issue($query, $db_connection, $tuples, $attrs);
-    $tuple = $tuples[0];
-    $id = $tuple[0];
-
-    //Increment max movie id
-    $query = "UPDATE MaxMovieID SET id = $id + 1;";
-    issue($query, $db_connection, $tuples, $attrs);
-
-    //Wrap string values in quotation marks
-    $title = "'" . $title . "'";
-    $rating = "'" . $rating . "'";
-    $company = "'" . $company . "'";
-
-    //Insert new Movie tuple
-    $query = "INSERT INTO Movie VALUES($id, $title, $year, $rating, $company);";
-    issue($query, $db_connection, $tuples, $attrs);
-    print "<p>Movie added sucessfully!</p>";
+    mysql_close($db_connection);
+    return;
   }
+
+  $tuples = [];
+  $attrs = [];
+
+  //Get max movie id
+  $query = "SELECT * FROM MaxMovieID;";
+  issue($query, $db_connection, $tuples, $attrs);
+  $tuple = $tuples[0];
+  $id = $tuple[0];
+
+  //Increment max movie id
+  $query = "UPDATE MaxMovieID SET id = $id + 1;";
+  issue($query, $db_connection, $tuples, $attrs);
+
+  //Wrap string values in quotation marks
+  $title = "'" . $title . "'";
+  $rating = "'" . $rating . "'";
+  $company = "'" . $company . "'";
+
+  //Insert new Movie tuple
+  $query = "INSERT INTO Movie VALUES($id, $title, $year, $rating, $company);";
+  issue($query, $db_connection, $tuples, $attrs);
+  print "<p>Movie added sucessfully!</p>";
 
   //Close database connection
   mysql_close($db_connection);

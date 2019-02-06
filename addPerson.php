@@ -7,33 +7,8 @@
   <body>
 
     <div id="center-col">
-      <div id="navbar">
-
-        <div id="logo" onclick="returnToHome()">
-          <p id="logo-text">IMBd</p>
-        </div>
-
-        <div id="add" style="display: inline-block; padding: 0px 0px 0px 10px;">
-          <button id="add-btn">Add +</button>
-          <div id="dropdown">
-            <p id="addComment" class="dropdown-option">Add comment</p>
-            <p id="addPerson" class="dropdown-option">Add actor/director</p>
-            <p id="addMovie" class="dropdown-option">Add movie</p>
-            <p id="addActorToMovie" class="dropdown-option">Add actor to movie</p>
-            <p id="addDirectorToMovie" class="dropdown-option">Add director to movie</p>
-          </div>
-        </div>
-
-        <div id="search" style="display: inline-block; padding: 0px 0px 0px 10px;">
-          <form action="search.php" method="GET" style="margin: 0px;">
-            <input name="keyword" type="text"><input type="submit" value="Search">
-          </form>
-        </div>
-
-      </div>
-
+      <?php include "database.php"; printNavBar(); ?>
       <div id="page-body">
-
         <form action="addPerson.php" method="POST">
 
           <p class="label" style="display: inline-block; padding-top: 10px;">Type:</p>
@@ -60,11 +35,8 @@
           <br><input type="submit" value="Submit">
 
         </form>
-
-        <?php include "database.php"; updateDB(); ?>
-
+        <?php updateDB(); ?>
       </div>
-
     </div>
   </body>
 </html>
@@ -81,52 +53,53 @@ function updateDB()
   $dob = $_POST["dob"];
   $dod = $_POST["dod"];
 
-  if ($first == "" || $last == "" || $dob == "")
+  if ($first == "" || $last == "" || $dob == "") {
     print "<p style='color: red;'>One or more fields missing!</p>";
-  else
-  {
-    $tuples = [];
-    $attrs = [];
-
-    ///Get max person id
-    $query = "SELECT * FROM MaxPersonID;";
-    issue($query, $db_connection, $tuples, $attrs);
-    $tuple = $tuples[0];
-    $id = $tuple[0];
-
-    //Increment max person id
-    $query = "UPDATE MaxPersonID SET id = $id + 1;";
-    issue($query, $db_connection, $tuples, $attrs);
-
-    //Wrap string values in quotation marks
-    $last = "'" . $last . "'";
-    $first = "'" . $first . "'";
-    $sex = "'" . $sex . "'";
-
-    //Format date in MySQL format
-    $dob = strtotime($dob);
-
-    //Insert new tuple
-    if ($type == "Actor") {
-      if ($dod == "")
-        $query = "INSERT INTO Actor VALUES($id, $last, $first, $sex, FROM_UNIXTIME(0) + INTERVAL $dob SECOND, NULL);";
-      else {
-        $dod = strtotime($dod);
-        $query = "INSERT INTO Actor VALUES($id, $last, $first, $sex, FROM_UNIXTIME(0) + INTERVAL $dob SECOND, FROM_UNIXTIME(0) + INTERVAL $dod SECOND);";
-      }
-    }
-    else {
-      if ($dod == "")
-        $query = "INSERT INTO Director VALUES($id, $last, $first, FROM_UNIXTIME(0) + INTERVAL $dob SECOND, NULL);";
-      else {
-        $dod = strtotime($dod);
-        $query = "INSERT INTO Director VALUES($id, $last, $first, FROM_UNIXTIME(0) + INTERVAL $dob SECOND, FROM_UNIXTIME(0) + INTERVAL $dod SECOND);";
-      }
-    }
-
-    issue($query, $db_connection, $tuples, $attrs);
-    print "<p>Actor/Director added sucessfully!</p>";
+    mysql_close($db_connection);
+    return;
   }
+
+  $tuples = [];
+  $attrs = [];
+
+  ///Get max person id
+  $query = "SELECT * FROM MaxPersonID;";
+  issue($query, $db_connection, $tuples, $attrs);
+  $tuple = $tuples[0];
+  $id = $tuple[0];
+
+  //Increment max person id
+  $query = "UPDATE MaxPersonID SET id = $id + 1;";
+  issue($query, $db_connection, $tuples, $attrs);
+
+  //Wrap string values in quotation marks
+  $last = "'" . $last . "'";
+  $first = "'" . $first . "'";
+  $sex = "'" . $sex . "'";
+
+  //Format date in MySQL format
+  $dob = strtotime($dob);
+
+  //Insert new tuple
+  if ($type == "Actor") {
+    if ($dod == "")
+      $query = "INSERT INTO Actor VALUES($id, $last, $first, $sex, FROM_UNIXTIME(0) + INTERVAL $dob SECOND, NULL);";
+    else {
+      $dod = strtotime($dod);
+      $query = "INSERT INTO Actor VALUES($id, $last, $first, $sex, FROM_UNIXTIME(0) + INTERVAL $dob SECOND, FROM_UNIXTIME(0) + INTERVAL $dod SECOND);";
+    }
+  }
+  else {
+    if ($dod == "")
+      $query = "INSERT INTO Director VALUES($id, $last, $first, FROM_UNIXTIME(0) + INTERVAL $dob SECOND, NULL);";
+    else {
+      $dod = strtotime($dod);
+      $query = "INSERT INTO Director VALUES($id, $last, $first, FROM_UNIXTIME(0) + INTERVAL $dob SECOND, FROM_UNIXTIME(0) + INTERVAL $dod SECOND);";
+    }
+  }
+
+  issue($query, $db_connection, $tuples, $attrs);
+  print "<p>Actor/Director added sucessfully!</p>";
 
   //Close database connection
   mysql_close($db_connection);
