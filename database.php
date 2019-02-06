@@ -19,7 +19,7 @@ function issue($query, $db_connection, &$rows, &$cols) {
   //Issue query to database
   $rs = mysql_query($query, $db_connection);
   if (!$rs) {
-    $errmsg = mysql_error($rs);
+    $errmsg = mysql_error($db_connection);
     print "Query issue failed. $errmsg";
     exit(1);
   }

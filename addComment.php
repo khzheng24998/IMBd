@@ -32,7 +32,7 @@
 
       </div>
 
-      <div id="page-body" style="display: flex;">
+      <div id="page-body">
 
         <form action="addComment.php" method="GET">
 
@@ -43,24 +43,26 @@
 
           <div style="display: inline-block; margin-left: 50px;">
             <p class="label">Rating</p>
-            <select>
-              <option value="1">1</option>
-              <option value="2">2</option>
-              <option value="3">3</option>
-              <option value="4">4</option>
-              <option value="5">5</option>
+            <select name="rating">
+              <option value=1>1</option>
+              <option value=2>2</option>
+              <option value=3>3</option>
+              <option value=4>4</option>
+              <option value=5>5</option>
             </select>
           </div>
 
           <p class="label">Movie</p>
-          <select>
+          <select name="mid">
             <?php include "database.php"; fetchMovies(); ?>
           </select>
 
           <p class="label">Comments</p>
-          <textarea name="query" cols="60" rows="8"></textarea><br><br>
-          <input type="submit" value="Submit" />
+          <textarea name="comment" cols="60" rows="8"></textarea><br><br>
+          <input type="submit" value="Submit">
         </form>
+
+        <?php updateDB(); ?>
 
       </div>
 
@@ -71,16 +73,40 @@
 <?php
 function fetchMovies()
 {
-  //Establish connection to MySQL database
   $db_connection = connect();
-
   $rows = [];
   $cols = [];
-  $query = "SELECT id, title FROM Movie;";
+  $query = "SELECT id, title FROM Movie ORDER BY title;";
   issue($query, $db_connection, $rows, $cols);
 
   foreach ($rows as $row)
     print "<option value=$row[0]>$row[1]</option>";
+
+  //Close database connection
+  mysql_close($db_connection);
+}
+
+function updateDB()
+{
+  $db_connection = connect();
+
+  $name = $_GET["name"];
+  $rating = $_GET["rating"];
+  $mid = $_GET["mid"];
+  $comment = $_GET["comment"];
+  $time = time();
+
+  if ($name == "")
+    print "<p style='color: red;'>Must enter name field!</p>";
+  else
+  {
+    //Wrap string values in quotation marks
+    $name = "'" . $name . "'";
+    $comment = "'" . $comment . "'";
+    $query = "INSERT INTO Review VALUES($name, FROM_UNIXTIME($time), $mid, $rating, $comment);";
+    issue($query, $db_connection, $rows, $cols);
+    print "<p>Comment added sucessfully!</p>";
+  }
 
   //Close database connection
   mysql_close($db_connection);
