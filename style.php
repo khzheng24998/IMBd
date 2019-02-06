@@ -56,3 +56,20 @@ body {
 #page-body {
   padding: 5px 0px 15px 30px;
 }
+
+#dropdown {
+  width: 150px;
+  background-color: white;
+  border: 1px solid black;
+  position: absolute;
+  z-index: 1;
+  padding: 5px 1px 5px 1px;
+  display: none;
+}
+
+.dropdown-option {
+  font-size: 15px;
+  margin: 0px;
+  padding: 5px 10px 5px 10px;
+  cursor: pointer;
+}

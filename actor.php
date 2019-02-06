@@ -1,7 +1,8 @@
 <html>
   <head>
     <link rel="stylesheet" href="style.php">
-    <script src="functions.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="functions.php"></script>
   </head>
   <body>
 
@@ -13,7 +14,14 @@
         </div>
 
         <div id="add" style="display: inline-block; padding: 0px 0px 0px 10px;">
-          <button>Add +</button>
+          <button style="width: 52px; margin-left: 101px;">Add +</button>
+          <div id="dropdown">
+            <p class="dropdown-option">Add comment</p>
+            <p class="dropdown-option">Add actor/director</p>
+            <p class="dropdown-option">Add movie</p>
+            <p class="dropdown-option">Add actor to movie</p>
+            <p class="dropdown-option">Add director to movie</p>
+          </div>
         </div>
 
         <div id="search" style="display: inline-block; padding: 0px 0px 0px 10px;">
