@@ -54,7 +54,7 @@ body {
 }
 
 #page-body {
-  padding: 5px 0px 15px 30px;
+  padding: 5px 30px 15px 30px;
 }
 
 #dropdown {

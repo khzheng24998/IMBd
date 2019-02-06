@@ -2,12 +2,12 @@
   <head>
     <link rel="stylesheet" href="style.php">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="functions.php"></script>
+    <script src="client.php"></script>
   </head>
   <body>
 
     <div id="center-col">
-      <?php include "database.php"; printNavBar(); ?>
+      <?php include "server.php"; printNavBar(); ?>
       <div id="page-body">
         <?php fetch(); ?>
       </div>

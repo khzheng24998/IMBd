@@ -2,12 +2,12 @@
   <head>
     <link rel="stylesheet" href="style.php">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="functions.php"></script>
+    <script src="client.php"></script>
   </head>
   <body>
 
     <div id="center-col">
-      <?php include "database.php"; printNavBar(); ?>
+      <?php include "server.php"; printNavBar(); ?>
       <div id="page-body">
         <form action="addComment.php" method="POST">
 
@@ -51,8 +51,13 @@ function fetchMovies()
   $query = "SELECT id, title FROM Movie ORDER BY title;";
   issue($query, $db_connection, $tuples, $attrs);
 
-  foreach ($tuples as $tuple)
-    print "<option value=$tuple[0]>$tuple[1]</option>";
+  $mid = $_GET["mid"];
+  foreach ($tuples as $tuple) {
+    if ($mid != "" && $mid == $tuple[0])
+      print "<option value=$tuple[0] selected>$tuple[1]</option>";
+    else
+      print "<option value=$tuple[0]>$tuple[1]</option>";
+  }
 
   //Close database connection
   mysql_close($db_connection);

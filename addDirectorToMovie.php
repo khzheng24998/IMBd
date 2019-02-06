@@ -2,7 +2,7 @@
   <head>
     <link rel="stylesheet" href="style.php">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="functions.php"></script>
+    <script src="client.php"></script>
   </head>
   <body>
 
@@ -38,7 +38,7 @@
 
         </form>
 
-        <?php include "database.php"; updateDB(); ?>
+        <?php include "server.php"; updateDB(); ?>
 
       </div>
 
