@@ -73,3 +73,8 @@ body {
   padding: 5px 10px 5px 10px;
   cursor: pointer;
 }
+
+.label {
+  font-weight: 550;
+  margin: 12px 0px 12px 0px;
+}

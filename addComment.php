@@ -57,7 +57,7 @@
             <?php include "database.php"; fetchMovies(); ?>
           </select>
 
-          <p class="label">Comments</p>
+          <p class="label">Comment</p>
           <textarea name="comment" cols="60" rows="8"></textarea><br><br>
           <input type="submit" value="Submit">
         </form>
