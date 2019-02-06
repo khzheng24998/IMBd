@@ -20,7 +20,7 @@
             <p id="addPerson" class="dropdown-option">Add actor/director</p>
             <p id="addMovie" class="dropdown-option">Add movie</p>
             <p id="addActorToMovie" class="dropdown-option">Add actor to movie</p>
-            <p class="dropdown-option">Add director to movie</p>
+            <pid="addDirectorToMovie" class="dropdown-option">Add director to movie</p>
           </div>
         </div>
 
