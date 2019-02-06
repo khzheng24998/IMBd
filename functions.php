@@ -8,8 +8,12 @@ function returnToHome() {
 
 $(document).ready(function()
 {
-  $("#add").on("click", function() {
+  $("#add-btn").on("click", function() {
     $("#dropdown").toggle();
+  });
+
+  $(".dropdown-option").on("click", function() {
+    window.location.href = event.target.id + ".php";
   });
 
   $(".dropdown-option").hover(function() {
@@ -20,5 +24,4 @@ $(document).ready(function()
     $(this).css("background-color", "white");
     $(this).css("color", "black");
   });
-
 });

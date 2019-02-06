@@ -42,7 +42,8 @@
 </html>
 
 <?php
-function printResults($attrs, $tuples, $rel) {
+include "database.php";
+function printSearchResults($attrs, $tuples, $rel) {
   //Query returned no tuples
   if (count($tuples) == 0) {
     print "<p>No results found.</p>";
@@ -75,41 +76,9 @@ function printResults($attrs, $tuples, $rel) {
   print "</table>";
 }
 
-function issueQuery($query, $db_connection, &$rows, &$cols) {
-  //Issue query to database
-  $rs = mysql_query($query, $db_connection);
-  if (!$rs) {
-    $errmsg = mysql_error($rs);
-    print "Query issue failed. $errmsg";
-    exit(1);
-  }
-
-  //Retrieve query results and store them in $rows
-  $rows = [];
-  while ($row = mysql_fetch_row($rs))
-    array_push($rows, $row);
-
-  //Retrieve column names and store them in $cols
-  $cols = [];
-  for ($i = 0; $i < mysql_num_fields($rs); $i++) {
-    $meta = mysql_fetch_field($rs, $i);
-    array_push($cols, $meta->name);
-  }
-}
-
 function fetch()
 {
-  //Establish connection to MySQL database
-  $db_connection = mysql_connect("localhost", "cs143", "");
-  if (!$db_connection) {
-    $errmsg = mysql_error($db_connection);
-    print "Connection failed. $errmsg";
-    exit(1);
-  }
-
-  //Select database to query
-  $db = "CS143";
-  mysql_select_db($db, $db_connection);
+  $db_connection = connect();
 
   //Format query using user input
   $keyword = $_GET["keyword"];
@@ -121,18 +90,18 @@ function fetch()
   $rows = [];
   $cols = [];
   $query = "SELECT id, CONCAT(first, ' ', last) AS Name, sex AS Sex, dob AS DOB, dod AS DOD FROM Actor WHERE CONCAT(first, ' ', last) LIKE '%$keyword%' OR CONCAT(last, ' ', first) LIKE '%$keyword%';";
-  issueQuery($query, $db_connection, $rows, $cols);
+  issue($query, $db_connection, $rows, $cols);
 
   print '<h3>Actors/Actresses</h3>';
-  printResults($cols, $rows, "actor");
+  printSearchResults($cols, $rows, "actor");
 
   $rows = [];
   $cols = [];
   $query = "SELECT id, title AS Title, year AS Year, rating AS Rating, company AS Company FROM Movie WHERE title LIKE '%$keyword%';";
-  issueQuery($query, $db_connection, $rows, $cols);
+  issue($query, $db_connection, $rows, $cols);
 
   print '<h3>Movies</h3>';
-  printResults($cols, $rows, "movie");
+  printSearchResults($cols, $rows, "movie");
 
   //Close database connection
   mysql_close($db_connection);
