@@ -20,11 +20,19 @@ body {
   align-items: center;
 }
 
+#footer {
+  height: 75px;
+  background-color: black;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+}
+
 #center-col {
   width: 70%;
   background-color: white;
   z-index: 2;
-  min-height: 100vh;
 }
 
 #logo {
@@ -55,6 +63,7 @@ body {
 
 #page-body {
   padding: 5px 30px 15px 30px;
+  min-height: 90vh;
 }
 
 #dropdown {

@@ -11,6 +11,7 @@
       <div id="page-body" style="display: flex;">
         <?php fetch(); ?>
       </div>
+      <?php printFooter(); ?>
     </div>
 
   </body>

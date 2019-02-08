@@ -11,6 +11,7 @@
       <div id="page-body">
         <?php fetch(); ?>
       </div>
+      <?php printFooter(); ?>
     </div>
 
   </body>

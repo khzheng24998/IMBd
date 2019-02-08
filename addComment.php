@@ -13,7 +13,7 @@
 
           <div style="display: inline-block;">
             <p class="label">Name</p>
-            <input name="name" type="text">
+            <input name="name" type="text" required>
           </div>
 
           <div style="display: inline-block; margin-left: 50px;">
@@ -38,6 +38,7 @@
         </form>
         <?php updateDB(); ?>
       </div>
+      <?php printFooter(); ?>
     </div>
   </body>
 </html>
@@ -73,7 +74,6 @@ function updateDB()
   $time = time();
 
   if ($name == "") {
-    print "<p style='color: red;'>Must enter a name!</p>";
     mysql_close($db_connection);
     return;
   }

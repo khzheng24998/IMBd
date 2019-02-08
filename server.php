@@ -100,4 +100,11 @@ function printNavBar()
 
   </div>';
 }
+
+function printFooter()
+{
+  print '<div id="footer">
+    <p>Site designed by Kenny Zheng</p>
+  </div>';
+}
 ?>

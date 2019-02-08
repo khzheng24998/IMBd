@@ -12,6 +12,7 @@
         <p>Showing results for "<?php print $_GET['keyword'] ?>"</p>
         <?php fetch(); ?>
       </div>
+      <?php printFooter(); ?>
     </div>
 
   </body>

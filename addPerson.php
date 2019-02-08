@@ -16,17 +16,17 @@
           <input name="type" type="radio" value="Director"> Director
 
           <br><p class="label" style="display: inline-block;">First Name:&nbsp;</p>
-          <input name="first" type="text">
+          <input name="first" type="text" required>
 
           <br><p class="label" style="display: inline-block;">Last Name:&nbsp;</p>
-          <input name="last" type="text">
+          <input name="last" type="text" required>
 
           <br><p class="label" style="display: inline-block;">Sex:</p>
           <input name="sex" type="radio" value="Male" checked> Male
           <input name="sex" type="radio" value="Female"> Female
 
           <br><p class="label" style="display: inline-block;">Date of Birth:&nbsp;</p>
-          <input name="dob" type="date">
+          <input name="dob" type="date" required>
 
           <br><p class="label" style="display: inline-block;">Date of Death*:&nbsp;</p>
           <input name="dod" type="date">
@@ -37,6 +37,7 @@
         </form>
         <?php updateDB(); ?>
       </div>
+      <?php printFooter(); ?>
     </div>
   </body>
 </html>
@@ -54,7 +55,6 @@ function updateDB()
   $dod = $_POST["dod"];
 
   if ($first == "" || $last == "" || $dob == "") {
-    print "<p style='color: red;'>One or more fields missing!</p>";
     mysql_close($db_connection);
     return;
   }

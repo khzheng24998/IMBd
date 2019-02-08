@@ -39,6 +39,7 @@
         </form>
         <?php updateDB(); ?>
       </div>
+      <?php printFooter(); ?>
     </div>
   </body>
 </html>
