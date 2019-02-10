@@ -9,6 +9,9 @@
     <div id="center-col">
       <?php include "server.php"; printNavBar(); ?>
       <div id="page-body">
+        <div id="add-title">
+          <h3 style="margin: 0px;">Add an actor/director</h3>
+        </div>
         <form action="addPerson.php" method="POST">
 
           <p class="label" style="display: inline-block; padding-top: 10px;">Type:</p>

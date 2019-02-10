@@ -9,6 +9,9 @@
     <div id="center-col">
       <?php include "server.php"; printNavBar(); ?>
       <div id="page-body">
+        <div id="add-title">
+          <h3 style="margin: 0px;">Add a comment</h3>
+        </div>
         <form action="addComment.php" method="POST">
 
           <div style="display: inline-block;">

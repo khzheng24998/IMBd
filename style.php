@@ -92,3 +92,14 @@ body {
   width: 58px;
   margin-left: 95px;
 }
+
+#add-title {
+  background-color: #cccccc;
+  border: 1px solid black;
+  width: 250px;
+  margin-top: 15px;
+  padding: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
