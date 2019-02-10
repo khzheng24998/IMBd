@@ -104,7 +104,7 @@ function printNavBar()
 function printFooter()
 {
   print '<div id="footer">
-    <p>Site designed by Kenny Zheng</p>
+    <p>COM SCI 143: Database Systems, Winter 2019</p>
   </div>';
 }
 ?>

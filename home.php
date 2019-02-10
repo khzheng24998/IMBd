@@ -22,9 +22,10 @@ function fetch()
 {
   $db_connection = connect();
 
+  $year = 2002;
   $tuples = [];
   $attrs = [];
-  $query = "SELECT id, title, year, rating FROM Movie JOIN Sales ON Movie.id = Sales.mid WHERE year > 2002 ORDER BY ticketsSold DESC LIMIT 10;";
+  $query = "SELECT id, title, year, rating FROM Movie JOIN Sales ON Movie.id = Sales.mid WHERE year = $year ORDER BY ticketsSold DESC LIMIT 10;";
   issue($query, $db_connection, $tuples, $attrs);
 
   print '<div style="flex: 50%;">';
@@ -34,7 +35,7 @@ function fetch()
 
   $tuples = [];
   $attrs = [];
-  $query = "SELECT id, title, year, rating, rot AS score FROM Movie JOIN MovieRating ON Movie.id = MovieRating.mid WHERE year > 2002 AND rot > 70 ORDER BY rot DESC LIMIT 10;";
+  $query = "SELECT id, title, year, rating, rot AS score FROM Movie JOIN MovieRating ON Movie.id = MovieRating.mid WHERE year = $year AND rot > 70 ORDER BY rot DESC LIMIT 10;";
   issue($query, $db_connection, $tuples, $attrs);
 
   print '<div style="flex: 50%;">';
