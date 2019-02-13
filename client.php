@@ -3,7 +3,7 @@ header("Content-type: text/javascript");
 ?>
 
 function returnToHome() {
-  window.location.href = "home.php";
+  window.location.href = "index.php";
 }
 
 $(document).ready(function()
