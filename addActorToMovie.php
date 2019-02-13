@@ -12,7 +12,7 @@
         <div id="add-title">
           <h3 style="margin: 0px;">Add an actor to a movie</h3>
         </div>
-        <form action="addActorToMovie.php" method="POST">
+        <form action="addActorToMovie.php" method="GET">
 
           <p class="label">Actor</p>
           <select name="aid">
@@ -74,9 +74,9 @@ function updateDB()
 {
   $db_connection = connect();
 
-  $aid = $_POST["aid"];
-  $mid = $_POST["mid"];
-  $role = $_POST["role"];
+  $aid = $_GET["aid"];
+  $mid = $_GET["mid"];
+  $role = $_GET["role"];
 
   if ($aid == "" || $mid == "" || $role == "") {
     mysql_close($db_connection);

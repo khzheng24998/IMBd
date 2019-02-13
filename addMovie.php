@@ -12,7 +12,7 @@
         <div id="add-title">
           <h3 style="margin: 0px;">Add a movie</h3>
         </div>
-        <form action="addMovie.php" method="POST">
+        <form action="addMovie.php" method="GET">
 
           <div style="display: flex;">
 
@@ -81,10 +81,10 @@ function updateDB()
 {
   $db_connection = connect();
 
-  $title = $_POST["title"];
-  $year = $_POST["year"];
-  $rating = $_POST["rating"];
-  $company = $_POST["company"];
+  $title = $_GET["title"];
+  $year = $_GET["year"];
+  $rating = $_GET["rating"];
+  $company = $_GET["company"];
 
   if ($title == "" || $year == "" || $rating == "" || $company == "") {
     mysql_close($db_connection);
@@ -117,7 +117,7 @@ function updateDB()
   //Retreive all selected genres
   $genres = [];
   for ($i = 1; $i <= 19; $i++) {
-    $genre = $_POST["genre" . $i];
+    $genre = $_GET["genre" . $i];
     if ($genre != "")
       array_push($genres, $genre);
   }

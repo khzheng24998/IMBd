@@ -12,7 +12,7 @@
         <div id="add-title">
           <h3 style="margin: 0px;">Add an actor/director</h3>
         </div>
-        <form action="addPerson.php" method="POST">
+        <form action="addPerson.php" method="GET">
 
           <p class="label" style="display: inline-block; padding-top: 10px;">Type:</p>
           <input name="type" type="radio" value="Actor" checked> Actor
@@ -50,12 +50,12 @@ function updateDB()
 {
   $db_connection = connect();
 
-  $type = $_POST["type"];
-  $first = $_POST["first"];
-  $last = $_POST["last"];
-  $sex = $_POST["sex"];
-  $dob = $_POST["dob"];
-  $dod = $_POST["dod"];
+  $type = $_GET["type"];
+  $first = $_GET["first"];
+  $last = $_GET["last"];
+  $sex = $_GET["sex"];
+  $dob = $_GET["dob"];
+  $dod = $_GET["dod"];
 
   if ($type == "" || $first == "" || $last == "" || $sex == "" || $dob == "") {
     mysql_close($db_connection);

@@ -12,7 +12,7 @@
         <div id="add-title">
           <h3 style="margin: 0px;">Add a comment</h3>
         </div>
-        <form action="addComment.php" method="POST">
+        <form action="addComment.php" method="GET">
 
           <div style="display: inline-block;">
             <p class="label">Name</p>
@@ -70,10 +70,10 @@ function fetchMovies()
 function updateDB()
 {
   $db_connection = connect();
-  $name = $_POST["name"];
-  $rating = $_POST["rating"];
-  $mid = $_POST["mid"];
-  $comment = $_POST["comment"];
+  $name = $_GET["name"];
+  $rating = $_GET["rating"];
+  $mid = $_GET["mid"];
+  $comment = $_GET["comment"];
   $time = time();
 
   if ($name == "" || $rating == "" || $mid == "") {
