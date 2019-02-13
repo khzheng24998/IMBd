@@ -76,7 +76,7 @@ function updateDB()
   $comment = $_POST["comment"];
   $time = time();
 
-  if ($name == "") {
+  if ($name == "" || $rating == "" || $mid == "") {
     mysql_close($db_connection);
     return;
   }

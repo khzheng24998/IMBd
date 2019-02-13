@@ -73,6 +73,11 @@ function updateDB()
   $did = $_POST["did"];
   $mid = $_POST["mid"];
 
+  if ($did == "" || $mid == "") {
+    mysql_close($db_connection);
+    return;
+  }
+
   $tuples = [];
   $attrs = [];
 

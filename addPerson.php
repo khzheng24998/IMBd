@@ -57,7 +57,7 @@ function updateDB()
   $dob = $_POST["dob"];
   $dod = $_POST["dod"];
 
-  if ($first == "" || $last == "" || $dob == "") {
+  if ($type == "" || $first == "" || $last == "" || $sex == "" || $dob == "") {
     mysql_close($db_connection);
     return;
   }

@@ -78,7 +78,7 @@ function updateDB()
   $mid = $_POST["mid"];
   $role = $_POST["role"];
 
-  if ($role == "") {
+  if ($aid == "" || $mid == "" || $role == "") {
     mysql_close($db_connection);
     return;
   }
