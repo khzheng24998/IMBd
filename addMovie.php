@@ -15,9 +15,18 @@
         <form action="addMovie.php" method="POST">
 
           <div style="display: flex;">
+
             <div style="flex: 25%;">
               <p class="label">Title</p>
-              <input name="title" type="text">
+              <input name="title" type="text" required>
+
+              <p class="label">Company</p>
+              <input name="company" type="text" required>
+            </div>
+
+            <div style="flex: 75%;">
+              <p class="label">Year</p>
+              <input name="year" type="text" size="4" required>
 
               <p class="label">MPAA Rating</p>
               <select name="rating">
@@ -28,13 +37,33 @@
               </select>
             </div>
 
-            <div style="flex: 75%;">
-              <p class="label">Year</p>
-              <input name="year" type="text">
+          </div>
 
-              <p class="label">Company</p>
-              <input name="company" type="text">
-            </div>
+          <div>
+            <p class="label">Genre(s)</p>
+
+            <input type="radio" name="genre1" value="Action"><p class="genre-option">&nbsp;Action</p>
+            <input type="radio" name="genre2" value="Adult"><p class="genre-option">&nbsp;Adult</p>
+            <input type="radio" name="genre3" value="Adventure"><p class="genre-option">&nbsp;Adventure</p>
+            <input type="radio" name="genre4" value="Animation"><p class="genre-option">&nbsp;Animation</p>
+            <input type="radio" name="genre5" value="Comedy"><p class="genre-option">&nbsp;Comedy</p><br>
+
+            <input type="radio" name="genre6" value="Crime"><p class="genre-option">&nbsp;Crime</p>
+            <input type="radio" name="genre7" value="Documentary"><p class="genre-option">&nbsp;Documentary</p>
+            <input type="radio" name="genre8" value="Drama"><p class="genre-option">&nbsp;Drama</p>
+            <input type="radio" name="genre9" value="Family"><p class="genre-option">&nbsp;Family</p>
+            <input type="radio" name="genre10" value="Fantasy"><p class="genre-option">&nbsp;Fantasy</p><br>
+
+            <input type="radio" name="genre11" value="Horror"><p class="genre-option">&nbsp;Horror</p>
+            <input type="radio" name="genre12" value="Musical"><p class="genre-option">&nbsp;Musical</p>
+            <input type="radio" name="genre13" value="Mystery"><p class="genre-option">&nbsp;Mystery</p>
+            <input type="radio" name="genre14" value="Romance"><p class="genre-option">&nbsp;Romance</p>
+            <input type="radio" name="genre15" value="Sci-Fi"><p class="genre-option">&nbsp;Sci-Fi</p><br>
+
+            <input type="radio" name="genre16" value="Short"><p class="genre-option">&nbsp;Short</p>
+            <input type="radio" name="genre17" value="Thriller"><p class="genre-option">&nbsp;Thriller</p>
+            <input type="radio" name="genre18" value="War"><p class="genre-option">&nbsp;War</p>
+            <input type="radio" name="genre19" value="Western"><p class="genre-option">&nbsp;Western</p>
           </div>
 
           <br><br><input type="submit" value="Submit">
@@ -58,7 +87,6 @@ function updateDB()
   $company = $_POST["company"];
 
   if ($title == "" || $year == "" || $rating == "" || $company == "") {
-    print "<p style='color: red;'>One or more fields missing!</p>";
     mysql_close($db_connection);
     return;
   }
@@ -85,6 +113,21 @@ function updateDB()
   $query = "INSERT INTO Movie VALUES($id, $title, $year, $rating, $company);";
   issue($query, $db_connection, $tuples, $attrs);
   print "<p>Movie added sucessfully!</p>";
+
+  //Retreive all selected genres
+  $genres = [];
+  for ($i = 1; $i <= 19; $i++) {
+    $genre = $_POST["genre" . $i];
+    if ($genre != "")
+      array_push($genres, $genre);
+  }
+
+  //Insert new MovieGenre tuples
+  foreach ($genres as $genre) {
+    $genre = "'" . $genre . "'";
+    $query = "INSERT INTO MovieGenre VALUES($id, $genre);";
+    issue($query, $db_connection, $tuples, $attrs);
+  }
 
   //Close database connection
   mysql_close($db_connection);

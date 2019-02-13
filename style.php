@@ -103,3 +103,9 @@ body {
   justify-content: center;
   align-items: center;
 }
+
+.genre-option {
+  display: inline-block;
+  width: 100px;
+  margin: 5px;
+}
