@@ -7,45 +7,81 @@
   <body>
 
     <div id="center-col">
-      <div id="navbar">
-
-        <div id="logo" onclick="returnToHome()">
-          <p id="logo-text">IMBd</p>
-        </div>
-
-        <div id="add" style="display: inline-block; padding: 0px 0px 0px 10px;">
-          <button id="add-btn">Add +</button>
-          <div id="dropdown">
-            <p id="addComment" class="dropdown-option">Add comment</p>
-            <p id="addPerson" class="dropdown-option">Add actor/director</p>
-            <p id="addMovie" class="dropdown-option">Add movie</p>
-            <p id="addActorToMovie" class="dropdown-option">Add actor to movie</p>
-            <p id="addDirectorToMovie" class="dropdown-option">Add director to movie</p>
-          </div>
-        </div>
-
-        <div id="search" style="display: inline-block; padding: 0px 0px 0px 10px;">
-          <form action="search.php" method="GET" style="margin: 0px;">
-            <input name="keyword" type="text"><input type="submit" value="Search">
-          </form>
-        </div>
-
-      </div>
-
+      <?php include "server.php"; printNavBar(); ?>
       <div id="page-body">
-
+        <div id="add-title">
+          <h3 style="margin: 0px;">Add a director to a movie</h3>
+        </div>
         <form action="addDirectorToMovie.php" method="POST">
 
+          <p class="label">Director</p>
+          <select name="did">
+            <?php fetchDirectors(); ?>
+          </select>
+
+          <p class="label">Movie</p>
+          <select name="mid">
+            <?php fetchMovies(); ?>
+          </select>
+
+          <br><br><input type="submit" value="Submit">
+
         </form>
-
-        <?php include "server.php"; updateDB(); ?>
-
+        <?php updateDB(); ?>
       </div>
-
+      <?php printFooter(); ?>
     </div>
   </body>
 </html>
 
 <?php
+function fetchDirectors()
+{
+  $db_connection = connect();
+  $tuples = [];
+  $attrs = [];
+  $query = "SELECT id, CONCAT(first, ' ', last) AS name FROM Director ORDER BY name;";
+  issue($query, $db_connection, $tuples, $attrs);
 
+  foreach ($tuples as $tuple) {
+      print "<option value=$tuple[0]>$tuple[1]</option>";
+  }
+
+  //Close database connection
+  mysql_close($db_connection);
+}
+
+function fetchMovies()
+{
+  $db_connection = connect();
+  $tuples = [];
+  $attrs = [];
+  $query = "SELECT id, title FROM Movie ORDER BY title;";
+  issue($query, $db_connection, $tuples, $attrs);
+
+  foreach ($tuples as $tuple) {
+      print "<option value=$tuple[0]>$tuple[1]</option>";
+  }
+
+  //Close database connection
+  mysql_close($db_connection);
+}
+
+function updateDB()
+{
+  $db_connection = connect();
+  $did = $_POST["did"];
+  $mid = $_POST["mid"];
+
+  $tuples = [];
+  $attrs = [];
+
+  //Insert new MovieDirector tuple
+  $query = "INSERT INTO MovieDirector VALUES($mid, $did);";
+  issue($query, $db_connection, $tuples, $attrs);
+  print "<p>Movie-Director relation added sucessfully!</p>";
+
+  //Close database connection
+  mysql_close($db_connection);
+}
 ?>
