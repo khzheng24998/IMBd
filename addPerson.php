@@ -86,18 +86,18 @@ function updateDB()
   //Insert new tuple
   if ($type == "Actor") {
     if ($dod == "")
-      $query = "INSERT INTO Actor VALUES($id, $last, $first, $sex, FROM_UNIXTIME(0) + INTERVAL $dob SECOND, NULL);";
+      $query = "INSERT INTO Actor VALUES($id, $last, $first, $sex, FROM_UNIXTIME($dob), NULL);";
     else {
       $dod = strtotime($dod);
-      $query = "INSERT INTO Actor VALUES($id, $last, $first, $sex, FROM_UNIXTIME(0) + INTERVAL $dob SECOND, FROM_UNIXTIME(0) + INTERVAL $dod SECOND);";
+      $query = "INSERT INTO Actor VALUES($id, $last, $first, $sex, FROM_UNIXTIME($dob), FROM_UNIXTIME($dod));";
     }
   }
   else {
     if ($dod == "")
-      $query = "INSERT INTO Director VALUES($id, $last, $first, FROM_UNIXTIME(0) + INTERVAL $dob SECOND, NULL);";
+      $query = "INSERT INTO Director VALUES($id, $last, $first, FROM_UNIXTIME($dob), NULL);";
     else {
       $dod = strtotime($dod);
-      $query = "INSERT INTO Director VALUES($id, $last, $first, FROM_UNIXTIME(0) + INTERVAL $dob SECOND, FROM_UNIXTIME(0) + INTERVAL $dod SECOND);";
+      $query = "INSERT INTO Director VALUES($id, $last, $first, FROM_UNIXTIME($dob), FROM_UNIXTIME($dod));";
     }
   }
 
