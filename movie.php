@@ -45,21 +45,43 @@ function fetch()
   $id = $_GET["id"];
   $tuples = [];
   $attrs = [];
-  $query = "SELECT title, year, rating, genre, CONCAT(first, ' ', last), company FROM Movie, MovieDirector, MovieGenre, Director WHERE Movie.id = MovieDirector.mid AND Movie.id = MovieGenre.mid AND MovieDirector.did = Director.id AND Movie.id = $id;";
-  issue($query, $db_connection, $tuples, $attrs);
 
-  $tuple = $tuples[0];
-  print "<h3 style='margin-bottom: 10px;'>$tuple[0] ($tuple[1])</h3>";
-  print "<div style='font-size: 13px;'>$tuple[2] | $tuple[3]</div>";
-  print "<strong style='display: inline-block;'>Director:&nbsp;</strong><p style='display: inline-block; margin-bottom: 3px;'>$tuple[4]</p><br>";
-  print "<strong style='display: inline-block;'>Production Company:&nbsp;</strong><p style='display: inline-block; margin-top: 3px;'>$tuple[5]</p><br>";
+  $query = "SELECT title, year, rating, company FROM Movie WHERE id = $id;";
+  issue($query, $db_connection, $tuples, $attrs);
+  $result = $tuples[0];
+  $title = $result[0];
+  $year = $result[1];
+  $rating = $result[2];
+  $company = $result[3];
+
+  $query = "SELECT CONCAT(first, ' ', last) FROM Movie, MovieDirector, Director WHERE Movie.id = MovieDirector.mid AND MovieDirector.did = Director.id AND Movie.id = $id;";
+  issue($query, $db_connection, $tuples, $attrs);
+  $result = $tuples[0];
+  $director = (count($tuples) != 0) ? $result[0] : "---";
+
+  $query = "SELECT genre FROM MovieGenre WHERE mid = $id;";
+  issue($query, $db_connection, $tuples, $attrs);
+  $genres = $tuples;
+
+  print "<h3 style='margin-bottom: 10px;'>$title ($year)</h3>";
+  print "<div style='font-size: 13px;'>$rating | ";
+
+  for ($i = 0; $i < count($genres); $i++) {
+      print $genres[$i][0];
+      if ($i != count($genres) - 1)
+        print ", ";
+  }
+
+  print "</div>";
+  print "<strong style='display: inline-block;'>Director:&nbsp;</strong><p style='display: inline-block; margin-bottom: 3px;'>$director</p><br>";
+  print "<strong style='display: inline-block;'>Production Company:&nbsp;</strong><p style='display: inline-block; margin-top: 3px;'>$company</p><br>";
 
   $tuples = [];
   $attrs = [];
   $query = "SELECT aid, CONCAT(first, ' ', last) AS name, role FROM MovieActor JOIN Actor ON MovieActor.aid = Actor.id WHERE mid = $id;";
   issue($query, $db_connection, $tuples, $attrs);
 
-  print '<h3>Cast</h3>';
+  print '<h3 style="margin-top: 2;">Cast</h3>';
   printTable($attrs, $tuples, "actor");
 
   $query = "SELECT AVG(rating), COUNT(*) FROM Review WHERE mid = $id;";
